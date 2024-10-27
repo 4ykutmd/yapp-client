@@ -2,9 +2,12 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 
-export default function TabOneScreen() {
+export default function Page() {
   return (
     <View style={styles.container}>
+      <Text>
+        Soru sor
+      </Text>
 
     </View>
   );
