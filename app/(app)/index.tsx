@@ -1,14 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import Button1 from '@/components/button-1';
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+
+      
+      <Button1 title='Soru sor'/>
+      <Button1 title='Test Hazirla'/>
+      <Button1 title='Selamlar'/>
+      <Button1 title='Selamlar'/>
+
+      
+
     </View>
   );
 }
@@ -17,7 +23,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 25,
+    gap: 15
   },
   title: {
     fontSize: 20,
