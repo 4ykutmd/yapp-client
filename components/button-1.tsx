@@ -2,10 +2,11 @@ import { router } from "expo-router";
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 
-export default function Button1({title}:{title:string}) {
+export default function Button1({title, path}:{title:string, path:string}) {
     return <Pressable 
       style={styles.button}
-      onPress={() => {router.push("/(app)/ask-question/")}}
+      //@ts-ignore
+      onPress={() => {router.push(path)}}
     >
         <Text style={styles.text}>{title}</Text>
 

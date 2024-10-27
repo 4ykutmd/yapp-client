@@ -25,19 +25,28 @@ const data = [
 export default function TabOneScreen() {
   const [buttons, setButtons] = useState([
     {
-      title: 'Soru Sor'
+      title: 'Soru Sor',
+      path: '/(app)/ask-question'
     },
     {
-      title: 'Test Hazirla'
+      title: 'Test Hazirla',
+      path: '/(app)/create-test'
+
     },
     {
-      title: 'Konu anlatimi'
+      title: 'Konu anlatimi',
+      path: '/(app)/ask-question'
+
     },
     {
-      title: 'buton2'
+      title: 'buton2',
+      path: '/(app)/ask-question'
+
     },
     {
-      title: 'buton3'
+      title: 'buton3',
+      path: '/(app)/ask-question'
+
     }
   ])
   return (
@@ -45,7 +54,7 @@ export default function TabOneScreen() {
 
       <FlatList
         data={buttons}
-        renderItem={({item}) => <Button1 title={item.title}/>}
+        renderItem={({item}) => <Button1 title={item.title} path={item.path}/>}
         numColumns={2}
         contentContainerStyle={{alignItems:"center", gap:30}}
         columnWrapperStyle={{gap:30}}

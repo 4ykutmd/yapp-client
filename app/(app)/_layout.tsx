@@ -1,12 +1,10 @@
 import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, router, Tabs } from 'expo-router';
+import { Tabs } from 'expo-router';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { Ionicons } from '@expo/vector-icons';
-import { Pressable } from 'react-native';
+import HeaderBackButton from '@/components/header-back';
 
 
 export default function TabLayout() {
@@ -36,14 +34,7 @@ export default function TabLayout() {
         options={{
           title: 'Soru Sor',
           headerLeft:() => (
-            <Pressable
-            style={{paddingLeft:15}} 
-            onPress={() => {
-              router.back()
-
-            }}>
-              <Ionicons name="arrow-back-outline" size={28} color="black"/>
-            </Pressable>
+            <HeaderBackButton/>
           )
         }}
         
@@ -52,6 +43,9 @@ export default function TabLayout() {
         name="create-test"
         options={{
           title: 'Test Olustur',
+          headerLeft:() => (
+            <HeaderBackButton/>
+          )
         }}
       />
     </Tabs>
