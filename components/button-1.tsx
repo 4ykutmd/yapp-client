@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 export default function Button1({title}:{title:string}) {
     return <Pressable 
       style={styles.button}
-      onPress={() => {router.replace("/(app)/ask-question/")}}
+      onPress={() => {router.push("/(app)/ask-question/")}}
     >
         <Text style={styles.text}>{title}</Text>
 
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: '80%',
+    width: 100,
     height: 100,
     backgroundColor: 'gray',
     borderRadius: 10
