@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 
-export default function Button1({title, path}:{title:string, path:string}) {
+export default function ButtonSquare({title, path}:{title:string, path:string}) {
     return <Pressable 
       style={styles.button}
       //@ts-ignore

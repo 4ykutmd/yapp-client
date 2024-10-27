@@ -4,6 +4,7 @@ import { Text, View } from '@/components/Themed';
 
 export default function Page() {
   return (
+    //TODO soru sayisi secme, konu secme
     <View style={styles.container}>
       <Text>
         Test oluştur.

@@ -4,6 +4,7 @@ import { Text, View } from '@/components/Themed';
 
 export default function Page() {
   return (
+    //TODO mesaj kutusu, foto yukleme
     <View style={styles.container}>
       <Text>
         Soru sor

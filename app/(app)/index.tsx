@@ -1,28 +1,12 @@
-import {Pressable, StyleSheet } from 'react-native';
+import {StyleSheet } from 'react-native';
 
-import { Text, View } from '@/components/Themed';
-import Button1 from '@/components/button-1';
+import { View } from '@/components/Themed';
 import { useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
+import ButtonSquare from '@/components/button-square';
 
-const data = [
-  {
-    title: 'Soru Sor'
-  },
-  {
-    title: 'Test Hazirla'
-  },
-  {
-    title: 'Konu anlatimi'
-  },
-  {
-    title: 'buton2'
-  },
-  {
-    title: 'buton3'
-  }
-]
 export default function TabOneScreen() {
+  //TODO diger sayfalarin isimleri ve yollari eklenebilir
   const [buttons, setButtons] = useState([
     {
       title: 'Soru Sor',
@@ -54,7 +38,7 @@ export default function TabOneScreen() {
 
       <FlatList
         data={buttons}
-        renderItem={({item}) => <Button1 title={item.title} path={item.path}/>}
+        renderItem={({item}) => <ButtonSquare title={item.title} path={item.path}/>}
         numColumns={2}
         contentContainerStyle={{alignItems:"center", gap:30}}
         columnWrapperStyle={{gap:30}}
