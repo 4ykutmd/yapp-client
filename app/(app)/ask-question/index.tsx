@@ -39,9 +39,10 @@ export default function Page() {
         <Text>
           cevaplar zart zurt
         </Text>
+        {image && <Image source={{ uri: image }} style={styles.image} />}
       </View>
 
-      {image && <Image source={{ uri: image }} style={styles.image} />}
+      
 
       <View style={{flexDirection:'row', gap:5}}>
 
@@ -80,11 +81,13 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   image: {
-    width: 100,
-    height: 100,
+    position:'absolute',
+    bottom: '1%',
+    width: 50,
+    height: 50,
     margin:10,
     borderWidth:1,
-    borderColor: '#5781ea'
+    borderColor: '#5781ea',
   },
   input: {
     width:'65%', 
