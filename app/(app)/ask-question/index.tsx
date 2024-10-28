@@ -8,6 +8,8 @@ import { AntDesign, Ionicons } from '@expo/vector-icons';
 export default function Page() {
   const [input, setInput] = useState('');
   const [image, setImage] = useState<string | null>(null);
+  const [output, setOutput] = useState('');
+
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -24,13 +26,26 @@ export default function Page() {
     }
   };
 
+  //TODO request
+  const questionPrompt = () => {
+
+  }
+
+  //TODO cevaplar icin bi tasarim, mesajlar birikecek mi
   return (
     <View style={styles.container}>
-        {image && <Image source={{ uri: image }} style={styles.image} />}
+
+      <View style={{width:'90%', height:'88%', borderWidth:1, borderColor:'#5781ea', borderRadius: 10}}>
+        <Text>
+          cevaplar zart zurt
+        </Text>
+      </View>
+
+      {image && <Image source={{ uri: image }} style={styles.image} />}
 
       <View style={{flexDirection:'row', gap:5}}>
 
-        <Pressable onPress={pickImage} style={{width:50, height:50, backgroundColor:'#5781ea', borderRadius:20, justifyContent:'center', alignItems:'center'}}>
+        <Pressable onPress={pickImage} style={styles.button}>
           <AntDesign name="picture" size={24} color="white" />
         </Pressable>
 
@@ -39,7 +54,7 @@ export default function Page() {
           onChangeText={(e) => {setInput(e)}}
         />
 
-        <Pressable style={{width:50, height:50, backgroundColor:'#5781ea', borderRadius:20, justifyContent:'center', alignItems:'center'}}>
+        <Pressable onPress={questionPrompt} style={styles.button}>
           <Ionicons name="send" size={24} color="white" />
         </Pressable>
       </View>
@@ -53,6 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    gap:15
   },
   title: {
     fontSize: 20,
@@ -78,5 +94,13 @@ const styles = StyleSheet.create({
     paddingLeft:15, 
     borderWidth:2, 
     borderColor:'#5781ea',
+  },
+  button: {
+    width:50, 
+    height:50, 
+    backgroundColor:'#5781ea', 
+    borderRadius:20, 
+    justifyContent:'center', 
+    alignItems:'center'
   }
 });
