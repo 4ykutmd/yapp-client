@@ -3,7 +3,8 @@ import * as ImagePicker from 'expo-image-picker';
 
 import { Text, View } from '@/components/Themed';
 import { useState } from 'react';
-import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
+import MessageBox from '@/components/message-box';
 
 export default function Page() {
   const [input, setInput] = useState('');
@@ -31,14 +32,14 @@ export default function Page() {
 
   }
 
-  //TODO cevaplar icin bi tasarim, mesajlar birikecek mi
+  //TODO cevaplar icin bi tasarim, mesajlar birikecek
   return (
     <View style={styles.container}>
 
-      <View style={{width:'90%', height:'88%', borderWidth:1, borderColor:'#5781ea', borderRadius: 10}}>
-        <Text>
-          cevaplar zart zurt
-        </Text>
+      <View style={{width:'90%', height:'88%', borderWidth:1, borderColor:'#5781ea', borderRadius: 10, padding: 10, gap:10}}>
+        <MessageBox direction='right' text='Bu soruyu çözer misin.'/>
+        <MessageBox direction='left' text='Tabiki! İşte Çözüm kaffşakaşfkdsaşsflkaşslkşldasfdşflkaaşsfld'/>
+
         {image && <Image source={{ uri: image }} style={styles.image} />}
       </View>
 
@@ -47,7 +48,7 @@ export default function Page() {
       <View style={{flexDirection:'row', gap:5}}>
 
         <Pressable onPress={pickImage} style={styles.button}>
-          <AntDesign name="picture" size={24} color="white" />
+          <Feather name="upload" size={24} color="white" />
         </Pressable>
 
         <TextInput
