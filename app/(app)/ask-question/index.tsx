@@ -1,7 +1,7 @@
-import { Button, Image, Pressable, StyleSheet, TextInput } from 'react-native';
+import { Image, Pressable, StyleSheet, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
-import { Text, View } from '@/components/Themed';
+import { View } from '@/components/Themed';
 import { useState } from 'react';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import MessageBox from '@/components/message-box';
@@ -36,14 +36,13 @@ export default function Page() {
   return (
     <View style={styles.container}>
 
-      <View style={{width:'90%', height:'88%', borderWidth:1, borderColor:'#5781ea', borderRadius: 10, padding: 10, gap:10}}>
+      <View style={styles.chatView}>
+
         <MessageBox direction='right' text='Bu soruyu çözer misin.'/>
         <MessageBox direction='left' text='Tabiki! İşte Çözüm kaffşakaşfkdsaşsflkaşslkşldasfdşflkaaşsfld'/>
 
         {image && <Image source={{ uri: image }} style={styles.image} />}
       </View>
-
-      
 
       <View style={{flexDirection:'row', gap:5}}>
 
@@ -80,6 +79,15 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  chatView: {
+    width:'90%', 
+    height:'88%', 
+    borderWidth:1, 
+    borderColor:'#5781ea', 
+    borderRadius: 10, 
+    padding: 10, 
+    gap:10
   },
   image: {
     position:'absolute',

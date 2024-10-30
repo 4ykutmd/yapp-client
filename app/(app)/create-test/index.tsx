@@ -7,7 +7,7 @@ export default function Page() {
     //TODO soru sayisi secme, konu secme
     <View style={styles.container}>
       <Text>
-        Test oluştur.
+        Test oluştur. 
       </Text>
 
     </View>
