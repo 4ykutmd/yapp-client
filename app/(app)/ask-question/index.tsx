@@ -3,7 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 
 import { View } from "@/components/Themed";
 import { useState } from "react";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import MessageBox from "@/components/message-box";
 
 export default function Page() {
@@ -31,7 +31,7 @@ export default function Page() {
 
   //TODO cevaplar icin bi tasarim, mesajlar birikecek
   return (
-    <View style={styles.container}>
+    <View style={styles.main}>
       <View style={styles.chatView}>
         <MessageBox direction="right" text="Bu soruyu çözer misin." />
         <MessageBox
@@ -44,7 +44,7 @@ export default function Page() {
 
       <View style={{ flexDirection: "row", gap: 5 }}>
         <Pressable onPress={pickImage} style={styles.button}>
-          <Feather name="upload" size={24} color="white" />
+          <Ionicons name="attach" size={24} color="white" />
         </Pressable>
 
         <TextInput
@@ -65,20 +65,11 @@ export default function Page() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  main: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     gap: 15,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
   chatView: {
     width: "90%",

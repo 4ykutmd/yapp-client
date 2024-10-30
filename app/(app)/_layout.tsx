@@ -48,6 +48,24 @@ export default function TabLayout() {
           )
         }}
       />
+      <Tabs.Screen
+        name="lecture"
+        options={{
+          title: 'Konu Anlatımı',
+          headerLeft:() => (
+            <HeaderBackButton/>
+          )
+        }}
+      />
+      <Tabs.Screen
+        name="lesson-plan"
+        options={{
+          title: 'Ders Planı Oluştur',
+          headerLeft:() => (
+            <HeaderBackButton/>
+          )
+        }}
+      />
     </Tabs>
   );
 }

@@ -41,6 +41,12 @@
         "projectId": "0da2e5c2-fbe1-4b8a-8626-e24e7be14684"
       }
     },
-    "owner": "panormos"
+    "owner": "panormos",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0da2e5c2-fbe1-4b8a-8626-e24e7be14684"
+    }
   }
 }

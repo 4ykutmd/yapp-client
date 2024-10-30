@@ -23,7 +23,7 @@ export default function Page() {
 
   return (
     //TODO soru sayisi secme, konu secme
-    <View style={styles.container}>
+    <View style={styles.main}>
       <DropdownComponent title="Eğitim Seviyesi" data={data1} />
       <DropdownComponent title="Sınıf" data={data2} />
 
@@ -44,20 +44,11 @@ export default function Page() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  main: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     gap:15
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
   },
   input: {
     width: "65%",
