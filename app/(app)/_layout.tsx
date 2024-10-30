@@ -42,7 +42,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="create-test"
         options={{
-          title: 'Test Olustur',
+          title: 'Test Oluştur',
           headerLeft:() => (
             <HeaderBackButton/>
           )
