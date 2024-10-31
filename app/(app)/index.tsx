@@ -44,7 +44,7 @@ export default function TabOneScreen() {
         numColumns={2}
         contentContainerStyle={{alignItems:"center", gap:30}}
         columnWrapperStyle={{gap:30}}
-        style={{backgroundColor:"#3254b1"}}
+        style={{}}
 
       />
 
