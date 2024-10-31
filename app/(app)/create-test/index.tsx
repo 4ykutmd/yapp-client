@@ -1,8 +1,8 @@
 import { Pressable, StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
-import DropdownComponent from "@/components/dropdown";
-import { TextInput } from "react-native-gesture-handler";
+import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
+import axios from "axios";
 
 const data1 = [
   { label: "İlkokul", value: "1" },
@@ -20,25 +20,59 @@ const data2 = [
 
 export default function Page() {
   const [input, setInput] = useState("");
+  const [data, setData] = useState()
+
+  let req = async () => {
+    try {
+      let res = await axios.get(
+          "http://192.168.1.7:3000/api/soru-sor?soru=rasyonel sayilar&type=4",{
+            
+          }
+      )
+      
+      console.log(res.data.cevap)
+      setData(res.data.cevap)
+      console.log(data)
+      return res
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+
+  }
 
   return (
     //TODO soru sayisi secme, konu secme
     <View style={styles.main}>
-      <DropdownComponent title="Eğitim Seviyesi" data={data1} />
-      <DropdownComponent title="Sınıf" data={data2} />
+      {/* <DropdownComponent title="Eğitim Seviyesi" data={data1} /> */}
+      {/* <DropdownComponent title="Sınıf" data={data2} /> */}
+      <View style={{alignItems:'center'}}>
 
-      <TextInput
-          style={styles.input}
-          placeholder="Organik kimya, Rasyonel Sayılar ..."
-          placeholderTextColor={"gray"}
-          onChangeText={(e) => {
-            setInput(e);
-          }}
+        <TextInput
+            style={styles.input}
+            placeholder="Organik kimya, Rasyonel Sayılar ..."
+            placeholderTextColor={"gray"}
+            onChangeText={(e) => {
+              setInput(e);
+            }}
+          />
+
+        <Pressable style={styles.button} onPress={req}>
+          <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Oluştur</Text>
+        </Pressable>
+
+        
+        <FlatList
+          data={data}
+          renderItem={({item}) => <Text>{item.cevap[0]}asd</Text>}
+          numColumns={2}
+          contentContainerStyle={{alignItems:"center", gap:30}}
+          columnWrapperStyle={{gap:30}}
+          style={{}}
+
         />
-
-      <Pressable style={styles.button}>
-        <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Oluştur</Text>
-      </Pressable>
+        
+      </View>
     </View>
   );
 }
@@ -60,7 +94,7 @@ const styles = StyleSheet.create({
     borderColor: "#5781ea",
   },
   button: {
-    minWidth: "22%",
+    width: 100,
     minHeight: 35,
     padding:5,
     marginTop:"30%",
