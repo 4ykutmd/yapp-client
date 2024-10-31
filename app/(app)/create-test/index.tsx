@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
 import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
@@ -24,6 +24,7 @@ export default function Page() {
   const [input, setInput] = useState("");
   const [data, setData] = useState<TestType[]>();
   const [isAnswered, setIsAnswered] = useState(false);
+  const [isloading, setIsLoading] = useState(false)
 
   let req = async () => {
     try {
@@ -34,6 +35,7 @@ export default function Page() {
         console.log(result)
         setData(result)
         setIsAnswered(true);
+        setIsLoading(false)
       } catch (error) {
         console.error(error)
       }
@@ -61,13 +63,13 @@ export default function Page() {
               onChangeText={setInput}
             />
 
-            <Pressable style={styles.button} onPress={req}>
+            <Pressable style={styles.button} onPress={() => {req(); setIsLoading(true); setIsAnswered(true)}}>
               <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Oluştur</Text>
             </Pressable>
           </View>
         }
+        {isloading && <View><ActivityIndicator size={60}/></View>}
 
-        
         <FlatList
           data={data}
           renderItem={({item, index}) => (
