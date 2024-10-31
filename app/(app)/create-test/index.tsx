@@ -25,6 +25,7 @@ export default function Page() {
   const [data, setData] = useState<TestType[]>();
   const [isAnswered, setIsAnswered] = useState(false);
   const [isloading, setIsLoading] = useState(false)
+  const [ reset , setReset] = useState(false)
 
   let req = async () => {
     try {
@@ -35,7 +36,8 @@ export default function Page() {
         console.log(result)
         setData(result)
         setIsAnswered(true);
-        setIsLoading(false)
+        setIsLoading(false);
+        setReset(true)
       } catch (error) {
         console.error(error)
       }
@@ -48,17 +50,17 @@ export default function Page() {
   }
 
   return (
-    //TODO soru sayisi secme, konu secme
+    //TODO soru sayisi secme
     <View style={styles.main}>
       {/* <DropdownComponent title="Eğitim Seviyesi" data={data1} /> */}
       {/* <DropdownComponent title="Sınıf" data={data2} /> */}
-      <View style={{alignItems:'center', justifyContent:'flex-end', padding:20}}>
+      
 
         {!isAnswered &&
-          <View style={{alignItems:'center'}}>
+          <View style={{alignItems:'center', marginTop:"60%"}}>
             <TextInput
               style={styles.input}
-              placeholder="Organik kimya, Rasyonel Sayılar ..."
+              placeholder="Test konusunu yazınız"
               placeholderTextColor={"gray"}
               onChangeText={setInput}
             />
@@ -68,7 +70,7 @@ export default function Page() {
             </Pressable>
           </View>
         }
-        {isloading && <View><ActivityIndicator size={60}/></View>}
+        {isloading && <View style={{position:'absolute', top:'45%'}}><ActivityIndicator size={60}/></View>}
 
         <FlatList
           data={data}
@@ -89,9 +91,12 @@ export default function Page() {
           style={{}}
 
         />
+        {reset && <Pressable style={styles.button} onPress={() => { setData([]);setIsLoading(false); setIsAnswered(false); setReset(false)}}>
+          <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Yeni test</Text>
+        </Pressable>
+        }
         
       </View>
-    </View>
   );
 }
 
@@ -100,10 +105,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap:15
+    gap:15,
+    padding:20,
   },
   input: {
-    width: "65%",
+    width: 250,
     height: 50,
     borderRadius: 30,
     padding: 10,
@@ -115,7 +121,7 @@ const styles = StyleSheet.create({
     width: 100,
     minHeight: 35,
     padding:5,
-    marginTop:"30%",
+    marginTop:"5%",
     backgroundColor:"#5781ea",
     borderRadius:10,
     alignItems:"center",
