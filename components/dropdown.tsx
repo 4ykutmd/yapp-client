@@ -5,7 +5,6 @@ import { FontAwesome6 } from "@expo/vector-icons";
 
 const DropdownComponent = ({ title, data }: { title: string; data: any }) => {
   const [value, setValue] = useState(null);
-  1;
   const renderItem = (item: any) => {
     return (
       <View style={styles.item}>

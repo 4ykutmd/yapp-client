@@ -1,24 +1,10 @@
 import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
-import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
+import { FlatList, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import axios from "axios";
 import { TestType } from "@/types/test.types";
 import React from "react";
-
-const data1 = [
-  { label: "İlkokul", value: "1" },
-  { label: "Ortaokul", value: "2" },
-  { label: "Lise", value: "3" },
-  { label: "Lisans", value: "4" },
-];
-
-const data2 = [
-  { label: "1", value: "1" },
-  { label: "2", value: "2" },
-  { label: "3", value: "3" },
-  { label: "4", value: "4" },
-];
 
 export default function Page() {
   const [input, setInput] = useState("");
@@ -53,11 +39,11 @@ export default function Page() {
     //TODO soru sayisi secme
     <View style={styles.main}>
       {/* <DropdownComponent title="Eğitim Seviyesi" data={data1} /> */}
-      {/* <DropdownComponent title="Sınıf" data={data2} /> */}
+      {/* <DropdownComponent title="Soru sayısı" data={data2} /> */}
       
 
         {!isAnswered &&
-          <View style={{alignItems:'center', marginTop:"60%"}}>
+          <View style={{alignItems:'center', marginTop:"60%", gap:10}}>
             <TextInput
               style={styles.input}
               placeholder="Test konusunu yazınız"
