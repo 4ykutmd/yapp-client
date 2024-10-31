@@ -21,7 +21,7 @@ export default function TabOneScreen() {
     },
     {
       title: 'Konu anlatimi',
-      path: '/(app)/ask-question',
+      path: '/(app)/lecture',
       icon: 'book-open'
 
     },
