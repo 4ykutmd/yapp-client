@@ -1,8 +1,5 @@
-import {StyleSheet } from 'react-native';
-
-import { View } from '@/components/Themed';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { useState } from 'react';
-import { FlatList } from 'react-native-gesture-handler';
 import ButtonSquare from '@/components/button-square';
 
 export default function TabOneScreen() {
@@ -47,7 +44,7 @@ export default function TabOneScreen() {
         numColumns={2}
         contentContainerStyle={{alignItems:"center", gap:30}}
         columnWrapperStyle={{gap:30}}
-        style={{}}
+        style={{backgroundColor:"#3254b1"}}
 
       />
 
@@ -59,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     paddingTop: 25,
-    alignItems:'center'
+    alignItems:'center',
     
   },
   title: {
