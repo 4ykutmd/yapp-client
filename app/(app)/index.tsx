@@ -14,13 +14,13 @@ export default function TabOneScreen() {
       icon: 'question-circle'
     },
     {
-      title: 'Test Hazirla',
+      title: 'Test Hazırla',
       path: '/(app)/create-test',
       icon: 'file-pen'
 
     },
     {
-      title: 'Konu anlatimi',
+      title: 'Konu Anlatımı',
       path: '/(app)/lecture',
       icon: 'book-open'
 

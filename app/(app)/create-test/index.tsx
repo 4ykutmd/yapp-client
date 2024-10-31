@@ -3,6 +3,8 @@ import { Text, View } from "@/components/Themed";
 import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import axios from "axios";
+import { TestType } from "@/types/test.types";
+import React from "react";
 
 const data1 = [
   { label: "İlkokul", value: "1" },
@@ -20,23 +22,25 @@ const data2 = [
 
 export default function Page() {
   const [input, setInput] = useState("");
-  const [data, setData] = useState()
+  const [data, setData] = useState<TestType[]>();
+  const [isAnswered, setIsAnswered] = useState(false);
 
   let req = async () => {
     try {
-      let res = await axios.get(
-          "http://192.168.1.7:3000/api/soru-sor?soru=rasyonel sayilar&type=4",{
-            
-          }
-      )
+      let res = await axios.get(`http://192.168.1.3:3000/api/soru-sor?soru=${input}&type=4`);
       
-      console.log(res.data.cevap)
-      setData(res.data.cevap)
-      console.log(data)
-      return res
+      try {
+        const result = JSON.parse(res.data.cevap)
+        console.log(result)
+        setData(result)
+        setIsAnswered(true);
+      } catch (error) {
+        console.error(error)
+      }
+
     } catch (error) {
         console.error(error);
-        return null;
+
     }
 
   }
@@ -48,26 +52,35 @@ export default function Page() {
       {/* <DropdownComponent title="Sınıf" data={data2} /> */}
       <View style={{alignItems:'center'}}>
 
-        <TextInput
+        {!isAnswered &&
+          <>
+          <TextInput
             style={styles.input}
             placeholder="Organik kimya, Rasyonel Sayılar ..."
             placeholderTextColor={"gray"}
-            onChangeText={(e) => {
-              setInput(e);
-            }}
+            onChangeText={setInput}
           />
 
         <Pressable style={styles.button} onPress={req}>
           <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Oluştur</Text>
         </Pressable>
+        </>}
 
         
         <FlatList
           data={data}
-          renderItem={({item}) => <Text>{item.cevap[0]}asd</Text>}
-          numColumns={2}
+          renderItem={({item}) => (
+            <View>
+              <Text>{item.soru}</Text>
+              {
+                item.secenekler.map((secenek, index) => (
+                  <Text key={index}>{secenek}</Text>
+                ))
+              }
+            </View>
+          )}
           contentContainerStyle={{alignItems:"center", gap:30}}
-          columnWrapperStyle={{gap:30}}
+          //columnWrapperStyle={{gap:30}}
           style={{}}
 
         />
@@ -92,6 +105,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     borderWidth: 2,
     borderColor: "#5781ea",
+    color: "#fff",
   },
   button: {
     width: 100,
