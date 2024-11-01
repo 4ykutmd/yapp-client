@@ -1,15 +1,34 @@
-import { Image, Pressable, StyleSheet, TextInput } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-
-import { View } from "@/components/Themed";
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import MessageBox from "@/components/message-box";
+import { MessageData } from "@/types/chat.types";
+import {
+  Bubble,
+  Composer,
+  GiftedChat,
+  GiftedChatProps,
+  IMessage,
+  InputToolbar,
+  InputToolbarProps,
+  Send,
+} from "react-native-gifted-chat";
+import React from "react";
+import { AskQuestionRequest } from "@/requests/ask-question";
 
 export default function Page() {
   const [input, setInput] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [output, setOutput] = useState("");
+
+  const [messages, setMessages] = useState<MessageData[]>([]);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -27,39 +46,98 @@ export default function Page() {
   };
 
   //TODO request
-  const questionPrompt = () => {};
+  const questionRequest = async (text: string) => {
+    let res = await AskQuestionRequest({ soru: text });
+    let newMessage: MessageData = {
+      id: messages.length + 1,
+      role: "model",
+      createdAt: new Date(),
+      parts: {
+        text: res.cevap,
+        image: null,
+      }
+    }
+    let myMessage: MessageData = {
+      id: messages.length + 2,
+      role: "user",
+      createdAt: new Date(),
+      parts: {
+        text: text,
+        image: null,
+      }
+    }
+    let newMessages = [newMessage, myMessage];
+    setMessages([...newMessages, ...messages]);
+  };
 
-  //TODO cevaplar icin bi tasarim, mesajlar birikecek
   return (
     <View style={styles.main}>
-      <View style={styles.chatView}>
-        <MessageBox direction="right" text="Bu soruyu çözer misin." />
-        <MessageBox
-          direction="left"
-          text="Tabiki! İşte Çözüm kaffşakaşfkdsaşsflkaşslkşldasfdşflkaaşsfld"
-        />
-
-        {image && <Image source={{ uri: image }} style={styles.image} />}
-      </View>
-
-      <View style={{ flexDirection: "row", gap: 5 }}>
-        <Pressable onPress={pickImage} style={styles.button}>
-          <Ionicons name="attach" size={24} color="white" />
-        </Pressable>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Soru sor"
-          placeholderTextColor={"gray"}
-          onChangeText={(e) => {
-            setInput(e);
-          }}
-        />
-
-        <Pressable onPress={questionPrompt} style={styles.button}>
-          <Ionicons name="send" size={24} color="white" />
-        </Pressable>
-      </View>
+      <GiftedChat
+        messagesContainerStyle={styles.chatView}
+        user={{
+          _id: 1,
+        }}
+        messages={messages.map((message) => {
+          return {
+            _id: message.id,
+            text: message.parts.text,
+            //image: message.parts.image,
+            createdAt: message.createdAt,
+            user: {
+              _id: message.role === "user" ? 1 : 2,
+            },
+          };
+        })}
+        onSend={(newMessages) => {
+          const newMessage: MessageData = {
+            id: newMessages[0]._id,
+            role: newMessages[0].user._id === 1 ? "user" : "model",
+            createdAt: new Date(newMessages[0].createdAt),
+            parts: {
+              text: newMessages[0].text,
+              image: null,
+            }
+          }
+          setMessages([newMessage, ...messages]);
+          console.log(newMessages);
+          questionRequest(newMessages[0].text);
+        }}
+        //render
+        renderChatEmpty={() => <Text>Bir şeyler sor...</Text>}
+        renderBubble={(props) => (
+          <MessageBox
+            direction={props.currentMessage?.user?._id === 1 ? "right" : "left"}
+            text={props.currentMessage?.text}
+          />
+        )}
+        renderComposer={(props) => (
+          <Composer
+            {...props}
+            textInputStyle={styles.input}
+            placeholder="Soru sor"
+            placeholderTextColor={"gray"}
+          />
+        )}
+        renderSend={(props) => (
+          <Send
+            {...props}
+            containerStyle={[styles.button, { opacity: props.text ? 1 : 0.5 }]}
+            alwaysShowSend
+            disabled={!props.text}
+          >
+            <Ionicons name="send" size={24} color="white" />
+          </Send>
+        )}
+        renderInputToolbar={(props) => (
+          <View style={{ flexDirection: "row", gap: 5, width: '94%'}}>
+            <Pressable onPress={pickImage} style={styles.button}>
+              <Ionicons name="attach" size={24} color="white" />
+            </Pressable>
+            <InputToolbar {...props} containerStyle={{backgroundColor: 'transparent', width: '87%'}} />
+          </View>
+        )}
+        renderAvatar={() => null}
+      />
     </View>
   );
 }
@@ -69,15 +147,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 15,
+    //gap: 15,
+    padding: 10,
+    backgroundColor: "#fcfcfc",
   },
   chatView: {
-    width: "90%",
-    height: "88%",
+    //width: "90%",
+    //height: "88%",
     borderWidth: 1,
     borderColor: "#5781ea",
     borderRadius: 10,
     padding: 10,
+    marginBottom: 10,
     gap: 10,
   },
   image: {

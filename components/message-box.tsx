@@ -1,5 +1,4 @@
-import { StyleSheet, Text } from "react-native";
-import { View } from "./Themed";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function MessageBox({
   direction,
@@ -10,14 +9,18 @@ export default function MessageBox({
 }) {
   if (direction == "left") {
     return (
-      <View style={styles.leftView}>
-        <Text style={{ color: "white" }}>{text}</Text>
+      <View style={{width: '100%'}}>
+        <View style={styles.leftView}>
+          <Text style={{ color: "white" }}>{text}</Text>
+        </View>
       </View>
     );
   } else {
     return (
-      <View style={styles.rightView}>
-        <Text>{text}</Text>
+      <View style={{width: '100%'}}>
+        <View style={styles.rightView}>
+          <Text>{text}</Text>
+        </View>
       </View>
     );
   }
@@ -25,9 +28,9 @@ export default function MessageBox({
 
 const styles = StyleSheet.create({
   leftView: {
-    width: "80%",
-    minHeight: 50,
+    width: "auto",
     padding: "3%",
+    maxWidth: "75%",
     alignSelf: "flex-start",
     alignItems: "flex-start",
     justifyContent: "center",
@@ -36,9 +39,9 @@ const styles = StyleSheet.create({
   },
 
   rightView: {
-    width: "80%",
-    minHeight: 50,
+    width: "auto",
     padding: "3%",
+    maxWidth: "75%",
     alignSelf: "flex-end",
     alignItems: "flex-start",
     justifyContent: "center",
