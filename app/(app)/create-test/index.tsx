@@ -43,7 +43,7 @@ export default function Page() {
       
 
         {!isAnswered &&
-          <View style={{alignItems:'center', marginTop:"60%", gap:10}}>
+          <View style={{alignItems:'center'}}>
             <TextInput
               style={styles.input}
               placeholder="Test konusunu yazınız"

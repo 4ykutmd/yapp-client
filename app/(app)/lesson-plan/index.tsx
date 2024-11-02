@@ -43,7 +43,7 @@ export default function Page() {
       
 
       {!isAnswered &&
-        <View style={{alignItems:'center',}}>
+        <View style={{alignItems:'center'}}>
           <TextInput
             style={styles.input}
             placeholder="Ders planı hazırlancak konu"
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     width: 100,
     minHeight: 35,
     padding:5,
-    marginTop:"30%",
+    marginTop:"5%",
     backgroundColor:"#5781ea",
     borderRadius:10,
     alignItems:"center",
