@@ -1,9 +1,6 @@
-import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { useState } from 'react';
 import ButtonSquare from '@/components/button-square';
-
-const x = Dimensions.get('window').height;
-const y = Dimensions.get('window').width;
 
 export default function TabOneScreen() {
   //TODO diger sayfalarin isimleri ve yollari eklenebilir
