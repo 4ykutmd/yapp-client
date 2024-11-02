@@ -124,7 +124,7 @@ export default function Page() {
       setLastImage(null);
     }
 
-    setImage(null);
+    //setImage(null);
   };
 
   return (
@@ -134,11 +134,12 @@ export default function Page() {
         user={{
           _id: 1,
         }}
+        //@ts-ignore
         messages={messages.map((message) => {
           return {
             _id: message.id,
             text: message.parts.text,
-            //image: message.parts.image,
+            image: message.parts.image,
             createdAt: message.createdAt,
             user: {
               _id: message.role === "user" ? 1 : 2,
@@ -156,6 +157,7 @@ export default function Page() {
             }
           }
           setMessages([newMessage, ...messages]);
+          if (image) setImage(null);
           console.log(newMessages);
           questionRequest(newMessages[0].text);
         }}
@@ -165,6 +167,7 @@ export default function Page() {
           <MessageBox
             direction={props.currentMessage?.user?._id === 1 ? "right" : "left"}
             text={props.currentMessage?.text}
+            image={props.currentMessage?.image}
           />
         )}
         renderComposer={(props) => (
