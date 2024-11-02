@@ -3,7 +3,6 @@ import { useState } from 'react';
 import ButtonSquare from '@/components/button-square';
 
 export default function TabOneScreen() {
-  //TODO diger sayfalarin isimleri ve yollari eklenebilir
   const [buttons, setButtons] = useState([
     {
       title: 'Soru Sor',
