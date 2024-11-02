@@ -6,8 +6,8 @@ import {
   View,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { useCallback, useRef, useState } from "react";
+import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import MessageBox from "@/components/message-box";
 import { MessageData } from "@/types/chat.types";
 import {
@@ -22,19 +22,40 @@ import {
 } from "react-native-gifted-chat";
 import React from "react";
 import { ChatRequest } from "@/requests/chat";
+import { Image } from "expo-image";
+import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 
 export default function Page() {
-  const [input, setInput] = useState("");
   const [image, setImage] = useState<string | null>(null);
-  const [output, setOutput] = useState("");
-
   const [messages, setMessages] = useState<MessageData[]>([]);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleCloseModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.dismiss();
+  }, []);
+
+  const launchCamera = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+  const launchLibrary = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
       quality: 1,
     });
 
@@ -120,33 +141,87 @@ export default function Page() {
           />
         )}
         renderComposer={(props) => (
-          <Composer
-            {...props}
-            textInputStyle={styles.input}
-            placeholder="Soru sor"
-            placeholderTextColor={"gray"}
-          />
+            <Composer
+              {...props}
+              textInputStyle={styles.input}
+              placeholder="Soru sor"
+              placeholderTextColor={"gray"}
+            />
         )}
         renderSend={(props) => (
-          <Send
-            {...props}
-            containerStyle={[styles.button, { opacity: props.text ? 1 : 0.5 }]}
-            alwaysShowSend
-            disabled={!props.text}
-          >
-            <Ionicons name="send" size={24} color="white" />
-          </Send>
+            <Send
+              {...props}
+              containerStyle={[styles.button, { opacity: props.text ? 1 : 0.5 }]}
+              alwaysShowSend
+              disabled={!props.text}
+            >
+              <Ionicons name="send" size={24} color="white" />
+            </Send>
         )}
         renderInputToolbar={(props) => (
-          <View style={{ flexDirection: "row", gap: 5, width: '94%'}}>
-            <Pressable onPress={pickImage} style={styles.button}>
-              <Ionicons name="attach" size={24} color="white" />
-            </Pressable>
-            <InputToolbar {...props} containerStyle={{backgroundColor: 'transparent', width: '87%'}} />
+          <View>
+            {
+              image && <View style={styles.imageView}>
+                <Pressable
+                style={styles.imageRemoveButton}
+                onPress={() => setImage(null)}
+                >
+                  <Feather name="x" size={15} color="white" />
+                </Pressable>
+                <Image
+                  source={{uri: image}}
+                  style={styles.image}
+                  contentFit="contain"
+                />
+              </View>
+            }
+            <View style={{ flexDirection: "row", gap: 5, width: '94%'}}>
+              <Pressable onPress={handlePresentModalPress} style={styles.button}>
+                <Ionicons name="attach" size={24} color="white" />
+              </Pressable>
+              <InputToolbar {...props} containerStyle={{backgroundColor: 'transparent', width: '87%'}} />
+            </View>
           </View>
         )}
         renderAvatar={() => null}
       />
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={['20%']}
+      >
+        <BottomSheetView style={styles.bottomSheetContainer}>
+          <View style={styles.buttonsView}>
+            <Pressable
+            style={styles.bottomSheetButtons}
+            onPress={() => {
+              handleCloseModalPress();
+              launchLibrary();
+            }}
+            >
+              <FontAwesome name="picture-o" size={24} color="white" />
+            </Pressable>
+            <Text style={styles.buttonsText}>
+              {"Galeriden\nSeç"}
+            </Text>
+          </View>
+          <View style={styles.buttonsView}>
+            <Pressable
+            style={styles.bottomSheetButtons}
+            onPress={() => {
+              handleCloseModalPress();
+              launchCamera();
+            }}
+            >
+              <FontAwesome name="camera" size={24} color="white" />
+            </Pressable>
+            <Text style={styles.buttonsText}>
+              {"Resim\nÇek"}
+            </Text>
+          </View>
+        </BottomSheetView>
+      </BottomSheetModal>
     </View>
   );
 }
@@ -170,21 +245,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     gap: 10,
   },
-  image: {
-    position: "absolute",
-    bottom: "1%",
-    width: 50,
-    height: 50,
-    margin: 10,
-    borderWidth: 1,
-    borderColor: "#5781ea",
-  },
   input: {
     width: "65%",
     height: 50,
     borderRadius: 30,
     padding: 10,
     paddingLeft: 15,
+    marginRight: 10,
     borderWidth: 2,
     borderColor: "#5781ea",
   },
@@ -196,4 +263,59 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  imageView: {
+    backgroundColor: '#fff',
+    width: 150,
+    height: 150,
+    marginBottom: 10,
+    alignSelf: 'center',
+    borderWidth: 2,
+    borderRadius: 7,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 5,
+  },
+  imageRemoveButton: {
+    width: 20,
+    height: 20,
+    position: 'absolute',
+    zIndex: 99,
+    backgroundColor: 'red',
+    borderRadius: 100,
+    right: -10,
+    top: -10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bottomSheetContainer: {
+    //flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#efefef",
+    alignItems: "center",
+    justifyContent: "center",
+    borderTopColor: "#e0e0e0",
+    borderTopWidth: 2,
+    gap: 30,
+    paddingVertical: '5%',
+  },
+  bottomSheetButtons: {
+    width: 50,
+    height: 50,
+    backgroundColor: "#5781ea",
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonsText: {
+    fontSize: 13,
+    textAlign: "center",
+    fontWeight: "500",
+  },
+  buttonsView: {
+    flexDirection: "column",
+    gap: 5,
+    alignItems: "center",
+  }
 });

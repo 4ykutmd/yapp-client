@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/components/useColorScheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,10 +52,12 @@ function RootLayoutNav() {
 
   return (
     <GestureHandlerRootView>
+      <BottomSheetModalProvider>
     {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
       <Stack>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
       </Stack>
+      </BottomSheetModalProvider>
     {/* </ThemeProvider> */}
     </GestureHandlerRootView>
   );
