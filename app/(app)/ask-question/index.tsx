@@ -21,7 +21,7 @@ import {
   Send,
 } from "react-native-gifted-chat";
 import React from "react";
-import { AskQuestionRequest } from "@/requests/ask-question";
+import { ChatRequest } from "@/requests/chat";
 
 export default function Page() {
   const [input, setInput] = useState("");
@@ -45,9 +45,18 @@ export default function Page() {
     }
   };
 
-  //TODO request
   const questionRequest = async (text: string) => {
-    let res = await AskQuestionRequest({ soru: text });
+    let history = messages.map((message) => {
+      return {
+        role: message.role,
+        parts: [
+          {
+            text: message.parts.text,
+          },
+        ],
+      };
+    }).reverse();
+    let res = await ChatRequest({ message: text, history });
     let newMessage: MessageData = {
       id: messages.length + 1,
       role: "model",
