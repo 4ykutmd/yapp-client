@@ -9,6 +9,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/components/useColorScheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { StatusBar } from 'expo-status-bar';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,6 +52,8 @@ function RootLayoutNav() {
   //const colorScheme = useColorScheme();
 
   return (
+    <>
+    <StatusBar style="dark" />
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
     {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
@@ -60,5 +63,6 @@ function RootLayoutNav() {
       </BottomSheetModalProvider>
     {/* </ThemeProvider> */}
     </GestureHandlerRootView>
+    </>
   );
 }
