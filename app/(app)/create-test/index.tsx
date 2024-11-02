@@ -75,8 +75,8 @@ export default function Page() {
           contentContainerStyle={{alignItems:"flex-start", gap:30,}}
           //columnWrapperStyle={{gap:30}}
           style={{}}
-
         />
+        
         {reset && <Pressable style={styles.button} onPress={() => { setData([]);setIsLoading(false); setIsAnswered(false); setReset(false)}}>
           <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Yeni test</Text>
         </Pressable>

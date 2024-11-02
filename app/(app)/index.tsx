@@ -25,7 +25,7 @@ export default function TabOneScreen() {
     {
       title: 'Ders Planı Hazırla',
       path: '/(app)/lesson-plan',
-      icon: 'book-open'
+      icon: 'calendar'
 
     },
   ])

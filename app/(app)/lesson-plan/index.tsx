@@ -2,7 +2,7 @@ import { View } from "@/components/Themed";
 import axios from "axios";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { FlatList, TextInput } from "react-native-gesture-handler";
 
 
 export default function Page() {
@@ -13,7 +13,7 @@ export default function Page() {
 
   let req = async () => {
     try {
-      let res = await axios.get(`http://192.168.1.7:3000/api/soru-sor?soru=${input}&type=5`);
+      let res = await axios.get(`http://192.168.1.184:3000/api/soru-sor?soru=${input}&type=5`);
       
       try {
         const result = JSON.parse(res.data.cevap)
@@ -46,7 +46,7 @@ export default function Page() {
         <View style={{alignItems:'center',}}>
           <TextInput
             style={styles.input}
-            placeholder="Anlatılacak konuyu yazınız"
+            placeholder="Ders planı hazırlancak konu"
             placeholderTextColor={"gray"}
             onChangeText={setInput}
           />
@@ -58,7 +58,22 @@ export default function Page() {
       }
       {isloading && <View style={{position:'absolute', top:'45%'}}><ActivityIndicator size={60}/></View>}
 
-      {data && <Text style={{}}>{data}</Text>}
+      {data && <FlatList
+          data={data}
+          renderItem={({item, index}:{item:any, index:number}) => (
+            <View style={{alignItems:'center',width:"100%", padding:10, borderWidth:1, borderColor:"#5781ea", borderRadius:15}}>
+              <View style={{width:"100%", alignItems:"center"}}>
+                <Text style={{marginBottom:20, fontSize:18, fontWeight:"bold", borderBottomWidth:0.7}}>{item.gün}</Text>
+              </View>
+              <View style={{width:"90%",}}>
+                <Text style={{marginBottom:20}}>{item.konu}</Text>
+              </View>
+            </View>
+          )}
+          contentContainerStyle={{gap:30,}}
+          //columnWrapperStyle={{width:"100%"}}
+          style={{width:"100%"}}
+        />}
 
       {data && <Pressable style={styles.button} onPress={() => { setData('');setIsLoading(false); setIsAnswered(false)}}>
           <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Temizle</Text>

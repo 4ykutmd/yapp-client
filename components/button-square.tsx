@@ -1,4 +1,4 @@
-import { FontAwesome6 } from "@expo/vector-icons";
+import { Feather, FontAwesome6 } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Pressable, StyleSheet, Text } from 'react-native';
 
@@ -14,7 +14,7 @@ export default function ButtonSquare({title, path, icon}:{title:string, path:str
           icon == 'question-circle' ? <FontAwesome6 name="question-circle" size={24} color="white" /> :
           icon == 'file-pen' ? <FontAwesome6 name="file-pen" size={24} color="white" /> :
           icon == 'book-open' ? <FontAwesome6 name="book-open" size={24} color="white" /> :
-          icon == '' ? <FontAwesome6 name="" size={24} color="white" /> :
+          icon == 'calendar' ? <Feather name="calendar" size={24} color="white" /> :
           icon == '' ? <FontAwesome6 name="" size={24} color="white" /> : null
           
         }
