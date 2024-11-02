@@ -2,7 +2,7 @@ import { View } from "@/components/Themed";
 import axios from "axios";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
 
   let req = async () => {
     try {
-      let res = await axios.get(`http://192.168.1.7:3000/api/soru-sor?soru=${input}&type=3`);
+      let res = await axios.get(`http://192.168.1.184:3000/api/soru-sor?soru=${input}&type=3`);
       
       try {
         const result = JSON.parse(res.data.cevap)
@@ -42,7 +42,8 @@ export default function Page() {
       {/* <DropdownComponent title="Eğitim Seviyesi" data={data1} /> */}
       {/* <DropdownComponent title="Sınıf" data={data2} /> */}
       
-      {!isAnswered &&
+      {
+        !isAnswered &&
         <View style={{alignItems:'center',}}>
           <TextInput
             style={styles.input}
@@ -58,7 +59,7 @@ export default function Page() {
       }
       {isloading && <View style={{position:'absolute', top:'45%'}}><ActivityIndicator size={60}/></View>}
 
-      {data && <Text style={{}}>{data}</Text>}
+      {data && <ScrollView><Text style={{}}>{data}</Text></ScrollView>}
 
       {data && <Pressable style={styles.button} onPress={() => { setData('');setIsLoading(false); setIsAnswered(false)}}>
           <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Temizle</Text>
