@@ -13,27 +13,27 @@ export default function Page() {
   const [isloading, setIsLoading] = useState(false)
 
   let req = async () => {
-  try {
-    let res = await axios.get(`http://192.168.1.7:3000/api/soru-sor?soru=${input}&type=3`);
-    
     try {
-      const result = JSON.parse(res.data.cevap)
-      console.log(result)
-      setData(result)
-      setIsAnswered(true);
-      setIsLoading(false)
-    } catch (error) {
-      const result = res.data.cevap
-      console.log(result)
-      setData(result)
-      setIsAnswered(true);
-      setIsLoading(false)
-    }
+      let res = await axios.get(`http://192.168.1.7:3000/api/soru-sor?soru=${input}&type=3`);
+      
+      try {
+        const result = JSON.parse(res.data.cevap)
+        console.log(result)
+        setData(result)
+        setIsAnswered(true);
+        setIsLoading(false)
+      } catch (error) {
+        const result = res.data.cevap
+        console.log(result)
+        setData(result)
+        setIsAnswered(true);
+        setIsLoading(false)
+      }
 
-    } catch (error) {
-        console.error(error);
+      } catch (error) {
+          console.error(error);
 
-    }
+      }
 
   }
 
@@ -42,7 +42,6 @@ export default function Page() {
       {/* <DropdownComponent title="Eğitim Seviyesi" data={data1} /> */}
       {/* <DropdownComponent title="Sınıf" data={data2} /> */}
       
-
       {!isAnswered &&
         <View style={{alignItems:'center',}}>
           <TextInput

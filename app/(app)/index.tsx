@@ -23,17 +23,11 @@ export default function TabOneScreen() {
 
     },
     {
-      title: 'buton2',
-      path: '/(app)/ask-question',
-      icon: ''
+      title: 'Ders Planı Hazırla',
+      path: '/(app)/lesson-plan',
+      icon: 'book-open'
 
     },
-    {
-      title: 'buton3',
-      path: '/(app)/ask-question',
-      icon: ''
-
-    }
   ])
   return (
     <View style={styles.container}>
