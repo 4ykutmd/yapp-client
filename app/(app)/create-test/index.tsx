@@ -15,7 +15,7 @@ export default function Page() {
 
   let req = async () => {
     try {
-      let res = await axios.get(`http://192.168.34.7:3000/api/soru-sor?soru=${input}&type=4`);
+      let res = await axios.get(`http://192.168.1.7:3000/api/soru-sor?soru=${input}&type=4`);
       
       try {
         const result = JSON.parse(res.data.cevap)
@@ -86,15 +86,16 @@ export default function Page() {
           data && <View style={{height:"auto", borderTopWidth:0.7, paddingTop:5, width:"100%", alignItems:"center"}}>
             {
               isOpened === false ? <Pressable onPress={()=>{setIsOpened(true)}} style={styles.button}><Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Cevaplar</Text></Pressable> : 
-              <View style={{height:100, alignItems:"center"}}><ScrollView style={{flexDirection:"row", padding:5,}} horizontal>
-                {
-                  data.map((item, index) => (
-                    <View key={index} style={{flexDirection:"row",alignItems:"center",justifyContent:"center", marginRight:10}}>
-                      <Text>{index+1}-</Text>
-                      <Text style={{padding:5, marginBottom:5, borderWidth:0.3, borderRadius:5}}>{item.cevap}</Text>
-                    </View>
-                  ))
-                }
+              <View style={{height:120, alignItems:"center", justifyContent:'center'}}>
+                <ScrollView style={{flexDirection:"row"}} horizontal>
+                  {
+                    data.map((item, index) => (
+                      <View key={index} style={{flexDirection:"row",alignItems:"center",justifyContent:"center", marginRight:10}}>
+                        <Text style={{padding:5, marginBottom:5}}>{index+1}-</Text>
+                        <Text style={{padding:5, marginBottom:5, borderWidth:0.5, borderRadius:5}}>{item.cevap}</Text>
+                      </View>
+                    ))
+                  }
                 </ScrollView>
                 <Pressable style={styles.button} onPress={()=>{setIsOpened(false)}}>
                   <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Gizle</Text>
