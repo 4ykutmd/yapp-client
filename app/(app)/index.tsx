@@ -1,6 +1,9 @@
-import { FlatList, StyleSheet, View } from 'react-native';
+import { Dimensions, FlatList, StyleSheet, View } from 'react-native';
 import { useState } from 'react';
 import ButtonSquare from '@/components/button-square';
+
+const x = Dimensions.get('window').height;
+const y = Dimensions.get('window').width;
 
 export default function TabOneScreen() {
   //TODO diger sayfalarin isimleri ve yollari eklenebilir
@@ -32,15 +35,17 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
 
-      <FlatList
-        data={buttons}
-        renderItem={({item}) => <ButtonSquare title={item.title} path={item.path} icon={item.icon}/>}
-        numColumns={2}
-        contentContainerStyle={{alignItems:"center", gap:30}}
-        columnWrapperStyle={{gap:30}}
-        style={{}}
+      <View style={{height:230}}>
+        <FlatList
+          data={buttons}
+          renderItem={({item}) => <ButtonSquare title={item.title} path={item.path} icon={item.icon}/>}
+          numColumns={2}
+          contentContainerStyle={{alignItems:"center", gap:30, justifyContent:"center"}}
+          columnWrapperStyle={{gap:30, height:100}}
+          style={{}}
 
-      />
+        />
+      </View>
 
     </View>
   );
@@ -49,8 +54,8 @@ export default function TabOneScreen() {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    paddingTop: 25,
     alignItems:'center',
+    justifyContent:"center",
     
   },
   title: {
