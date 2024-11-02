@@ -15,7 +15,7 @@ export default function Page() {
 
   let req = async () => {
     try {
-      let res = await axios.get(`http://192.168.1.7:3000/api/soru-sor?soru=${input}&type=4`);
+      let res = await axios.get(`http://192.168.1.184:3000/api/soru-sor?soru=${input}&type=4`);
       
       try {
         const result = JSON.parse(res.data.cevap)
@@ -66,7 +66,11 @@ export default function Page() {
               
               {
                 item.secenekler.map((secenek, index) => (
-                  <Text key={index} style={{padding:5, marginBottom:5, borderWidth:0.3, borderRadius:5}}>{secenek}</Text>
+                  
+                  <View key={index}>
+                    <Text style={{padding:5, marginBottom:5, borderWidth:0.3, borderRadius:5}}>{secenek}</Text>
+                  </View>
+
                 ))
               }
               
@@ -76,7 +80,7 @@ export default function Page() {
           //columnWrapperStyle={{gap:30}}
           style={{}}
         />
-        
+
         {reset && <Pressable style={styles.button} onPress={() => { setData([]);setIsLoading(false); setIsAnswered(false); setReset(false)}}>
           <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Yeni test</Text>
         </Pressable>
