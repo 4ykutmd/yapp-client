@@ -1,6 +1,6 @@
 import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "@/components/Themed";
-import { FlatList, TextInput } from "react-native-gesture-handler";
+import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import axios from "axios";
 import { TestType } from "@/types/test.types";
@@ -10,8 +10,9 @@ export default function Page() {
   const [input, setInput] = useState("");
   const [data, setData] = useState<TestType[]>();
   const [isAnswered, setIsAnswered] = useState(false);
-  const [isloading, setIsLoading] = useState(false)
-  const [ reset , setReset] = useState(false)
+  const [isloading, setIsLoading] = useState(false);
+  const [ isOpened, setIsOpened] = useState(false);
+  const [ reset , setReset] = useState(false);
 
   let req = async () => {
     try {
@@ -30,7 +31,6 @@ export default function Page() {
 
     } catch (error) {
         console.error(error);
-
     }
 
   }
@@ -56,9 +56,11 @@ export default function Page() {
             </Pressable>
           </View>
         }
+
         {isloading && <View style={{position:'absolute', top:'45%'}}><ActivityIndicator size={60}/></View>}
 
-        <FlatList
+        {
+          data && <FlatList
           data={data}
           renderItem={({item, index}) => (
             <View style={{alignItems:'flex-start',}}>
@@ -80,6 +82,29 @@ export default function Page() {
           //columnWrapperStyle={{gap:30}}
           style={{}}
         />
+        }
+        {
+          data && <View style={{height:"auto", borderTopWidth:0.7, paddingTop:5, width:"100%", alignItems:"center"}}>
+            {
+              isOpened === false ? <Pressable onPress={()=>{setIsOpened(true)}} style={styles.button}><Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Cevaplar</Text></Pressable> : 
+              <View style={{height:100, alignItems:"center"}}><ScrollView style={{flexDirection:"row", padding:5,}} horizontal>
+                {
+                  data.map((item, index) => (
+                    <View key={index} style={{flexDirection:"row",alignItems:"center",justifyContent:"center", marginRight:10}}>
+                      <Text>{index+1}-</Text>
+                      <Text style={{padding:5, marginBottom:5, borderWidth:0.3, borderRadius:5}}>{item.cevap}</Text>
+                    </View>
+                  ))
+                }
+                </ScrollView>
+                <Pressable style={styles.button} onPress={()=>{setIsOpened(false)}}>
+                  <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Gizle</Text>
+                </Pressable>
+              </View>
+            }
+          </View>
+        }
+        
 
         {reset && <Pressable style={styles.button} onPress={() => { setData([]);setIsLoading(false); setIsAnswered(false); setReset(false)}}>
           <Text style={{color:"white", fontWeight:"bold",fontSize:16}}>Yeni test</Text>
@@ -95,7 +120,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap:15,
     padding:20,
   },
   input: {
