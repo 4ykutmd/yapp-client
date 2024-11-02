@@ -28,6 +28,10 @@ import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 export default function Page() {
   const [image, setImage] = useState<string | null>(null);
   const [messages, setMessages] = useState<MessageData[]>([]);
+  const [lastImage, setLastImage] = useState<{
+    fileUri: string;
+    mimeType: string;
+  } | null>(null);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -74,10 +78,22 @@ export default function Page() {
           {
             text: message.parts.text,
           },
+          lastImage !== null ? {
+            fileData: {
+              mimeType: lastImage.mimeType,
+              fileUri: lastImage.fileUri,
+            },
+          } : null,
         ],
       };
     }).reverse();
-    let res = await ChatRequest({ message: text, history, fileUri: image });
+    let remove_null_in_parts = history.map((message) => {
+      return {
+        role: message.role,
+        parts: message.parts.filter((part) => part !== null),
+      };
+    });
+    let res = await ChatRequest({ message: text, history: remove_null_in_parts, fileUri: image });
     let newMessage: MessageData = {
       id: messages.length + 1,
       role: "model",
@@ -93,11 +109,22 @@ export default function Page() {
       createdAt: new Date(),
       parts: {
         text: text,
-        image: null,
+        image: image,
       }
     }
     let newMessages = [newMessage, myMessage];
     setMessages([...newMessages, ...messages]);
+
+    if (res.have_file) {
+      setLastImage({
+        fileUri: res.file.fileUri,
+        mimeType: res.file.mimeType,
+      })
+    } else {
+      setLastImage(null);
+    }
+
+    setImage(null);
   };
 
   return (

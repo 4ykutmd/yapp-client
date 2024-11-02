@@ -2,22 +2,26 @@ import axios from "axios";
 
 type HistoryType = {
   role: "user" | "model";
-  parts: {
-    text: string;
-  }[];
+  parts:
+    {
+        text?: string;
+        fileData?: {
+          mimeType: string;
+          fileUri: string | null;
+        };
+      }[]
 }[];
 
 export async function ChatRequest({
   message,
   history,
-  fileUri
+  fileUri,
 }: {
   message: string;
   history: HistoryType;
   fileUri: string | null;
 }) {
   try {
-
     let bodyFormData = new FormData();
     bodyFormData.append("prompt", message);
     bodyFormData.append("history", JSON.stringify(history));
@@ -29,11 +33,15 @@ export async function ChatRequest({
       } as any);
     }
     //console.log(history)
-    const res = await axios.post("http://192.168.1.113:3000/api/chat", bodyFormData, {
+    const res = await axios.post(
+      "http://192.168.34.7:3000/api/chat",
+      bodyFormData,
+      {
         headers: {
-            "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data",
         },
-    });
+      }
+    );
 
     return res.data;
   } catch (error) {

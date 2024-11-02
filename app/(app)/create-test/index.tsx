@@ -1,5 +1,4 @@
-import { ActivityIndicator, Pressable, StyleSheet } from "react-native";
-import { Text, View } from "@/components/Themed";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList, ScrollView, TextInput } from "react-native-gesture-handler";
 import { useState } from "react";
 import axios from "axios";
@@ -16,7 +15,7 @@ export default function Page() {
 
   let req = async () => {
     try {
-      let res = await axios.get(`http://192.168.1.184:3000/api/soru-sor?soru=${input}&type=4`);
+      let res = await axios.get(`http://192.168.34.7:3000/api/soru-sor?soru=${input}&type=4`);
       
       try {
         const result = JSON.parse(res.data.cevap)
