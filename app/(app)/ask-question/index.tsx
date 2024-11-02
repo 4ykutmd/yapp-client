@@ -77,7 +77,7 @@ export default function Page() {
         ],
       };
     }).reverse();
-    let res = await ChatRequest({ message: text, history });
+    let res = await ChatRequest({ message: text, history, fileUri: image });
     let newMessage: MessageData = {
       id: messages.length + 1,
       role: "model",
