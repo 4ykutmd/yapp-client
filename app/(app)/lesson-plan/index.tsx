@@ -1,7 +1,6 @@
-import { View } from "@/components/Themed";
 import axios from "axios";
 import { useState } from "react";
-import { ActivityIndicator, Pressable, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { FlatList, TextInput } from "react-native-gesture-handler";
 
 export default function Page() {
