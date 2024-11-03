@@ -154,6 +154,17 @@ export default function Page() {
               Alert.alert("Resim ekleyin", "Bu seçeneği kullanmak için resim ekle.");
               return;
             }
+            const newMessage: MessageData = {
+              id: 1,
+              role: "user",
+              createdAt: new Date(),
+              parts: {
+                text: "Görseldeki soruyu çözer misin?",
+                image: image,
+              }
+            }
+            setMessages([newMessage, ...messages]);
+            if (image) setImage(null);
             questionRequest("Görseldeki soruyu çözer misin?");
           }}
           >
