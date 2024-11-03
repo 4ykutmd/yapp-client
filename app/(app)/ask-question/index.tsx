@@ -143,12 +143,12 @@ export default function Page() {
     <View style={styles.main}>
       {
         messages.length === 0 &&
-        <View style={[styles.hazirMesajlar, {bottom: image ? '40%' : '15%'}]}>
+        <View style={[styles.hazirMesajlar, {bottom: image ? '34%' : '11%'}]}>
           <Text style={{fontSize: 16, fontWeight: '600'}}>
             Hazır Mesajlar
           </Text>
           <Pressable
-          style={[styles.hazirMesajView, {opacity: !image ? 0.5 : 1}]}
+          style={[styles.hazirMesajView, {opacity: !image ? 0.3 : 1}]}
           onPress={() => {
             if (!image) {
               Alert.alert("Resim ekleyin", "Bu seçeneği kullanmak için resim ekle.");
@@ -329,12 +329,13 @@ const styles = StyleSheet.create({
   },
   hazirMesajlar: {
     position: 'absolute',
+    bottom:'50%',
     height: 90,
-    width: '100%',
+    width: '92%',
     flexDirection: 'column',
-    backgroundColor: '#fefeee',
-    borderWidth: 3,
+    borderWidth: 1.5,
     borderRadius: 10,
+    borderColor:'gray',
     zIndex: 99,
     padding: 10,
     gap: 10,
