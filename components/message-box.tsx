@@ -5,11 +5,13 @@ import { StyleSheet, Text, View } from "react-native";
 export default function MessageBox({
   direction,
   text,
-  image
+  image,
+  children
 }: {
-  direction: string;
+  direction: 'left' | 'right' | 'loading';
   text: string;
   image?: string;
+  children?: any;
 }) {
   const [bubbleWidth, setBubbleWidth] = useState(0);
   if (direction == "left") {
@@ -17,6 +19,14 @@ export default function MessageBox({
       <View style={{width: '100%'}}>
         <View style={styles.leftView}>
           <Text style={{ color: "white" }}>{text}</Text>
+        </View>
+      </View>
+    );
+  } else if (direction == "loading") {
+    return (
+      <View style={{width: '100%'}}>
+        <View style={styles.leftView}>
+          {children}
         </View>
       </View>
     );

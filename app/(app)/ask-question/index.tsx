@@ -24,8 +24,12 @@ import React from "react";
 import { ChatRequest } from "@/requests/chat";
 import { Image } from "expo-image";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import LottieView from "lottie-react-native";
 
 export default function Page() {
+  const [isLoading, setIsLoading] = useState(false);
+  const animation = useRef<LottieView>(null);
+
   const [image, setImage] = useState<string | null>(null);
   const [messages, setMessages] = useState<MessageData[]>([]);
   const [lastImage, setLastImage] = useState<{
@@ -93,7 +97,13 @@ export default function Page() {
         parts: message.parts.filter((part) => part !== null),
       };
     });
+
+    setIsLoading(true);
+    //animation.current?.play();
     let res = await ChatRequest({ message: text, history: remove_null_in_parts, fileUri: image });
+    //animation.current?.pause();
+    setIsLoading(false);
+
     let newMessage: MessageData = {
       id: messages.length + 1,
       role: "model",
@@ -153,7 +163,7 @@ export default function Page() {
             createdAt: new Date(newMessages[0].createdAt),
             parts: {
               text: newMessages[0].text,
-              image: null,
+              image: image,
             }
           }
           setMessages([newMessage, ...messages]);
@@ -162,7 +172,7 @@ export default function Page() {
           questionRequest(newMessages[0].text);
         }}
         //render
-        renderChatEmpty={() => <Text>Bir şeyler sor...</Text>}
+        //renderChatEmpty={() => <Text>Bir şeyler sor...</Text>}
         renderBubble={(props) => (
           <MessageBox
             direction={props.currentMessage?.user?._id === 1 ? "right" : "left"}
@@ -212,6 +222,25 @@ export default function Page() {
               <InputToolbar {...props} containerStyle={{backgroundColor: 'transparent', width: '87%'}} />
             </View>
           </View>
+        )}
+        renderFooter={() => (
+          <>
+          { isLoading &&
+            <MessageBox
+            direction="loading"
+            text=""
+            >
+              <LottieView
+                ref={animation}
+                source={require('@/assets/animations/loading.json')}
+                autoPlay
+                loop
+                style={{ width: 100, height: 30 }}
+                resizeMode="cover"
+              />
+            </MessageBox>
+          }
+          </>
         )}
         renderAvatar={() => null}
       />
