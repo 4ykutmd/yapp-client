@@ -34,7 +34,7 @@ export async function ChatRequest({
     }
     //console.log(history)
     const res = await axios.post(
-      "http://192.168.34.7:3000/api/chat",
+      "http://192.168.1.7:3000/api/chat",
       bodyFormData,
       {
         headers: {

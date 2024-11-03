@@ -106,7 +106,7 @@ export default function Page() {
           style={{}}
         />
       )}
-      {data && (
+      {reset && (
         <View
           style={{
             height: "auto",
@@ -138,7 +138,7 @@ export default function Page() {
               }}
             >
               <ScrollView style={{ flexDirection: "row" }} horizontal>
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                   <View
                     key={index}
                     style={{
