@@ -22,17 +22,19 @@ export default function Page() {
   let req = async () => {
     try {
       let res = await axios.get(
-        `http://192.168.1.7:3000/api/soru-sor?soru=${input}&type=4`
+        `http://192.168.1.3:3000/api/soru-sor?soru=${input}&type=4`
       );
 
       try {
+        console.log(res.data.cevap);
         const result = JSON.parse(res.data.cevap);
         console.log(result);
         setData(result);
-        setIsAnswered(true);
         setIsLoading(false);
         setReset(true);
       } catch (error) {
+        setIsLoading(false);
+        setIsAnswered(false);
         console.error(error);
       }
     } catch (error) {
