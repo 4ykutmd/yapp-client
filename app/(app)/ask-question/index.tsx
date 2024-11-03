@@ -1,4 +1,5 @@
 import {
+  Alert,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -140,6 +141,26 @@ export default function Page() {
 
   return (
     <View style={styles.main}>
+      {
+        messages.length === 0 &&
+        <View style={[styles.hazirMesajlar, {bottom: image ? '40%' : '15%'}]}>
+          <Text style={{fontSize: 16, fontWeight: '600'}}>
+            Hazır Mesajlar
+          </Text>
+          <Pressable
+          style={[styles.hazirMesajView, {opacity: !image ? 0.5 : 1}]}
+          onPress={() => {
+            if (!image) {
+              Alert.alert("Resim ekleyin", "Bu seçeneği kullanmak için resim ekle.");
+              return;
+            }
+            questionRequest("Görseldeki soruyu çözer misin?");
+          }}
+          >
+            <Text>Görseldeki soruyu çözer misin?</Text>
+          </Pressable>
+        </View>
+      }
       <GiftedChat
         messagesContainerStyle={styles.chatView}
         user={{
@@ -294,6 +315,24 @@ const styles = StyleSheet.create({
     //gap: 15,
     padding: 10,
     backgroundColor: "#fcfcfc",
+  },
+  hazirMesajlar: {
+    position: 'absolute',
+    height: 90,
+    width: '100%',
+    flexDirection: 'column',
+    backgroundColor: '#fefeee',
+    borderWidth: 3,
+    borderRadius: 10,
+    zIndex: 99,
+    padding: 10,
+    gap: 10,
+  },
+  hazirMesajView: {
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 5,
+    backgroundColor: '#fff',
   },
   chatView: {
     //width: "90%",
