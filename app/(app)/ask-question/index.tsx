@@ -1,5 +1,6 @@
 import {
   Alert,
+  Image,
   Keyboard,
   Pressable,
   StyleSheet,
@@ -24,7 +25,6 @@ import {
 } from "react-native-gifted-chat";
 import React from "react";
 import { ChatRequest } from "@/requests/chat";
-import { Image } from "expo-image";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import LottieView from "lottie-react-native";
 
@@ -244,7 +244,7 @@ export default function Page() {
                 <Image
                   source={{uri: image}}
                   style={styles.image}
-                  contentFit="contain"
+                  resizeMode="contain"
                 />
               </View>
             }

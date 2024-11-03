@@ -1,6 +1,5 @@
-import { Image } from "expo-image";
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 export default function MessageBox({
   direction,
@@ -43,7 +42,7 @@ export default function MessageBox({
           <Image
             source={{ uri: image }}
             style={[styles.image, { width: bubbleWidth-25 }]}
-            contentFit="contain"
+            resizeMode="contain"
           />}
           <Text>{text}</Text>
         </View>
