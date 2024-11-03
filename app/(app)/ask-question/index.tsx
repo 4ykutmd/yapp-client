@@ -1,4 +1,5 @@
 import {
+  Keyboard,
   Pressable,
   StyleSheet,
   Text,
@@ -6,7 +7,7 @@ import {
   View,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Feather, FontAwesome, Ionicons } from "@expo/vector-icons";
 import MessageBox from "@/components/message-box";
 import { MessageData } from "@/types/chat.types";
@@ -216,7 +217,7 @@ export default function Page() {
               </View>
             }
             <View style={{ flexDirection: "row", gap: 5, width: '94%'}}>
-              <Pressable onPress={handlePresentModalPress} style={styles.button}>
+              <Pressable onPress={() => {handlePresentModalPress(); Keyboard.dismiss();}} style={styles.button}>
                 <Ionicons name="attach" size={24} color="white" />
               </Pressable>
               <InputToolbar {...props} containerStyle={{backgroundColor: 'transparent', width: '87%'}} />
